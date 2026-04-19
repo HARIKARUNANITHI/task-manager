@@ -30,4 +30,5 @@ python -m http.server 5500
 http://localhost:5500
 
 ## API Docs
-http://127.0.0.1:8000/docs
+## API Docs
+https://task-manager-hzch.onrender.com/docs
