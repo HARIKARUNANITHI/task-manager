@@ -1,6 +1,6 @@
 let token = "";
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL = "https://task-manager-hzch.onrender.com";
 
 // REGISTER
 async function register() {
