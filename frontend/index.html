@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Task Manager</h1>
+
+    <h2>Register</h2>
+    <input id="reg_email" placeholder="Email">
+    <input id="reg_password" placeholder="Password">
+    <button onclick="register()">Register</button>
+
+    <h2>Login</h2>
+    <input id="login_email" placeholder="Email">
+    <input id="login_password" placeholder="Password">
+    <button onclick="login()">Login</button>
+
+    <h2>Create Task</h2>
+    <input id="title" placeholder="Title">
+    <input id="desc" placeholder="Description">
+    <button onclick="createTask()">Create</button>
+
+    <h2>Tasks</h2>
+    <button onclick="getTasks()">Load Tasks</button>
+    <ul id="taskList"></ul>
+
+    <h2>View Task by ID</h2>
+    <input id="task_id_input" placeholder="Enter Task ID">
+    <button onclick="getSingleTask()">Get Task</button>
+
+    <p id="singleTaskResult"></p>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
