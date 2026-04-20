@@ -1,3 +1,5 @@
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -50,9 +52,6 @@ def create_access_token(data: dict):
 
 # -------------------- ROUTES --------------------
 
-@app.get("/")
-def home():
-    return {"message": "Task Manager API running"}
 
 # REGISTER
 @app.post("/register")
@@ -185,3 +184,10 @@ def get_task(task_id: int, token: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Task not found")
 
     return task
+
+# Serve frontend
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
+
+@app.get("/")
+def serve_frontend():
+    return FileResponse("frontend/index.html")
