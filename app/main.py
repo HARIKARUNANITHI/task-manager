@@ -9,10 +9,8 @@ from app import models, schemas
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 
-# -------------------- APP INIT --------------------
 app = FastAPI()
 
-# ✅ CORS MUST BE HERE (VERY IMPORTANT)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -21,7 +19,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# -------------------- DB --------------------
 Base.metadata.create_all(bind=engine)
 
 def get_db():
@@ -31,7 +28,6 @@ def get_db():
     finally:
         db.close()
 
-# -------------------- AUTH --------------------
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 SECRET_KEY = "mysecretkey"
@@ -50,10 +46,7 @@ def create_access_token(data: dict):
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-# -------------------- ROUTES --------------------
 
-
-# REGISTER
 @app.post("/register")
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     existing_user = db.query(models.User).filter(models.User.email == user.email).first()
@@ -72,7 +65,6 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
     return {"message": "User registered successfully"}
 
-# LOGIN
 @app.post("/login")
 def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
     try:
@@ -93,7 +85,6 @@ def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
         print("LOGIN ERROR:", str(e)) 
         raise HTTPException(status_code=500, detail="Login failed")
 
-# CREATE TASK
 @app.post("/tasks")
 def create_task(title: str, description: str, token: str, db: Session = Depends(get_db)):
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -113,7 +104,6 @@ def create_task(title: str, description: str, token: str, db: Session = Depends(
 
     return new_task
 
-# GET TASKS
 @app.get("/tasks")
 def get_tasks(token: str, db: Session = Depends(get_db)):
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -125,7 +115,6 @@ def get_tasks(token: str, db: Session = Depends(get_db)):
 
     return tasks
 
-# DELETE TASK
 @app.delete("/tasks/{task_id}")
 def delete_task(task_id: int, token: str, db: Session = Depends(get_db)):
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -146,7 +135,6 @@ def delete_task(task_id: int, token: str, db: Session = Depends(get_db)):
 
     return {"message": "Task deleted successfully"}
 
-# UPDATE TASK
 @app.put("/tasks/{task_id}")
 def update_task(task_id: int, completed: bool, token: str, db: Session = Depends(get_db)):
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -167,7 +155,6 @@ def update_task(task_id: int, completed: bool, token: str, db: Session = Depends
 
     return {"message": "Task updated"}
 
-# GET SINGLE TASK
 @app.get("/tasks/{task_id}")
 def get_task(task_id: int, token: str, db: Session = Depends(get_db)):
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -185,7 +172,6 @@ def get_task(task_id: int, token: str, db: Session = Depends(get_db)):
 
     return task
 
-# Serve frontend
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/")
