@@ -1,34 +1,102 @@
 # Task Manager API
 
-## Features
-- User Registration & Login (JWT)
-- Create Task
-- View All Tasks
-- View Single Task
-- Mark Task as Completed
-- Delete Task
+## 🚀 Project Overview
 
-## Tech Stack
-- FastAPI
-- SQLite
-- SQLAlchemy
-- HTML, CSS, JavaScript
+This is a full-stack Task Manager application built using FastAPI for the backend and a simple frontend using HTML, CSS, and JavaScript.
 
-## How to Run
+Users can register, login, and manage their personal tasks.
 
-1. Install dependencies:
+---
+
+## ✨ Features
+
+* User Registration & Login (JWT Authentication)
+* Create Task
+* View All Tasks
+* View Single Task
+* Mark Task as Completed
+* Delete Task
+
+---
+
+## 🛠 Tech Stack
+
+* Backend: FastAPI
+* Database: SQLite
+* ORM: SQLAlchemy
+* Authentication: JWT + bcrypt
+* Frontend: HTML, CSS, JavaScript
+* Deployment: Render
+
+---
+
+## 🌐 Live Demo
+
+🔗 Full Application:
+https://task-manager-hzch.onrender.com
+
+📄 API Docs:
+https://task-manager-hzch.onrender.com/docs
+
+---
+
+## ⚙️ How to Run Locally
+
+### 1. Clone repository
+
+git clone https://github.com/HARIKARUNANITHI/task-manager.git
+
+### 2. Install dependencies
+
 pip install -r requirements.txt
 
-2. Run backend:
+### 3. Run backend
+
 uvicorn app.main:app --reload
 
-3. Run frontend:
-cd frontend
-python -m http.server 5500
+### 4. Open in browser
 
-4. Open browser:
-http://localhost:5500
+http://127.0.0.1:8000
 
-## API Docs
-## API Docs
-https://task-manager-hzch.onrender.com/docs
+---
+
+## 🔐 Environment Variables
+
+Create a `.env` file and add:
+
+SECRET_KEY=your_secret_key_here
+
+---
+
+## 📁 Project Structure
+
+task-manager/
+│
+├── app/
+│   ├── main.py
+│   ├── models.py
+│   ├── schemas.py
+│   └── database.py
+│
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+│
+├── requirements.txt
+└── README.md
+
+---
+
+## 📌 Notes
+
+* Users can only access their own tasks
+* Passwords are securely hashed using bcrypt
+* JWT is used for authentication
+* Frontend and backend are served together using FastAPI
+
+---
+
+## 🙌 Author
+
+Hari K
