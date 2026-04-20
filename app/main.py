@@ -76,17 +76,23 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 # LOGIN
 @app.post("/login")
 def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
-    db_user = db.query(models.User).filter(models.User.email == user.email).first()
+    try:
+        db_user = db.query(models.User).filter(models.User.email == user.email).first()
 
-    if not db_user:
-        raise HTTPException(status_code=400, detail="User not found")
+        if not db_user:
+            raise HTTPException(status_code=400, detail="User not found")
 
-    if not verify_password(user.password, db_user.password):
-        raise HTTPException(status_code=400, detail="Invalid password")
+    
+        if not pwd_context.verify(user.password, db_user.password):
+            raise HTTPException(status_code=400, detail="Invalid password")
 
-    token = create_access_token({"sub": db_user.email})
+        token = create_access_token({"sub": db_user.email})
 
-    return {"access_token": token, "token_type": "bearer"}
+        return {"access_token": token, "token_type": "bearer"}
+
+    except Exception as e:
+        print("LOGIN ERROR:", str(e)) 
+        raise HTTPException(status_code=500, detail="Login failed")
 
 # CREATE TASK
 @app.post("/tasks")
