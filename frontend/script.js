@@ -14,7 +14,12 @@ async function register() {
     });
 
     let data = await res.json();
-    alert(data.detail || "Registered successfully");
+
+    if (res.ok) {
+        alert("Registered successfully");
+    } else {
+        alert(data.detail || "Error");
+    }
 }
 
 // LOGIN
@@ -34,7 +39,7 @@ async function login() {
         token = data.access_token;
         alert("Login successful");
     } else {
-        alert("Login failed");
+        alert("Invalid credentials");
     }
 }
 
@@ -45,7 +50,10 @@ async function createTask() {
         return;
     }
 
-    await fetch(`${BASE_URL}/tasks?title=${title.value}&description=${desc.value}&token=${token}`, {
+    let title = document.getElementById("title").value;
+    let desc = document.getElementById("desc").value;
+
+    await fetch(`${BASE_URL}/tasks?title=${title}&description=${desc}&token=${token}`, {
         method: "POST"
     });
 
