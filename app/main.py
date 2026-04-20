@@ -1,5 +1,6 @@
 
 from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from app.database import engine, Base, SessionLocal
@@ -29,7 +30,6 @@ def verify_password(plain_password, hashed_password):
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
